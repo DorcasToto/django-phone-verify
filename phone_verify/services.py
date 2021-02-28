@@ -48,7 +48,7 @@ class PhoneVerificationService(object):
         """
         message = self._generate_message(security_code)
 
-        response = sms.send("Hello Message!", ["+2547xxxxxx"])
+        response = sms.send("Hello Message!", [number,])
         print(response)
 
     def _generate_message(self, security_code):
