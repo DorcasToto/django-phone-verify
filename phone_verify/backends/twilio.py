@@ -5,10 +5,20 @@ from __future__ import absolute_import
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client as TwilioRestClient
 
+import africastalking
+
 # Local
 from .base import BaseBackend
 from phone_verify.models import SMSVerification
 
+
+# Initialize SDK
+username = "sandbox"
+api_key = "1f454e12132a2efb728c37fe7e604cf6618332f7666dd0e48ced8c59fdae628f"
+africastalking.initialize(username, api_key)
+
+# Initialize a service e.g. SMS
+sms = africastalking.SMS
 
 class TwilioBackend(BaseBackend):
     def __init__(self, **options):
@@ -22,13 +32,14 @@ class TwilioBackend(BaseBackend):
         self.client = TwilioRestClient(self._sid, self._secret)
         self.exception_class = TwilioRestException
 
-    def send_sms(self, number, message):
-        self.client.messages.create(to=number, body=message, from_=self._from)
+    def send_sms(self, recepients, message):
+        response = sms.send(recepients = '0794375045',message = 'Testing')
+        print(response)
+        # self.client.messages.create(to=number, body=message, from_=self._from)
 
     def send_bulk_sms(self, numbers, message):
-        for number in numbers:
-            self.send_sms(number=number, message=message)
-
+       for number in numbers:
+            self.send_sms(recepients=number, message=message)
 
 class TwilioSandboxBackend(BaseBackend):
     def __init__(self, **options):

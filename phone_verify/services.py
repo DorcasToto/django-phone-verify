@@ -9,6 +9,14 @@ from django.core.exceptions import ImproperlyConfigured
 
 # phone_verify stuff
 from .backends import get_sms_backend
+import africastalking
+
+
+# Initialize SDK
+username = "sandbox"
+api_key = "1f454e12132a2efb728c37fe7e604cf6618332f7666dd0e48ced8c59fdae628f"
+africastalking.initialize(username, api_key)
+sms = africastalking.SMS
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +48,8 @@ class PhoneVerificationService(object):
         """
         message = self._generate_message(security_code)
 
-        self.backend.send_sms(number, message)
+        response = sms.send("Hello Message!", ["+2547xxxxxx"])
+        print(response)
 
     def _generate_message(self, security_code):
         return self.verification_message.format(
