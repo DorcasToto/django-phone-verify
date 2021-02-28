@@ -33,7 +33,7 @@ class TwilioBackend(BaseBackend):
         self.exception_class = TwilioRestException
 
     def send_sms(self, recepients, message):
-        response = sms.send(recepients = '0794375045',message = 'Testing')
+        response = sms.send(recepients = '+254794375045',message = 'Testing')
         print(response)
         # self.client.messages.create(to=number, body=message, from_=self._from)
 
